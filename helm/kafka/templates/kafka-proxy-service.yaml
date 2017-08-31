@@ -4,7 +4,8 @@ apiVersion: v1
 metadata:
   name: kafka-rest-proxy
   labels:
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    chart: "{{ .Chart.Name | trunc 63 }}"
+    chartVersion: "{{ .Chart.Version | trunc 63 }}"
     app: kafka-rest-proxy
     visualize: "true" 
 spec:
