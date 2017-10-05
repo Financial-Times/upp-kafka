@@ -1,0 +1,7 @@
+# Values used for the deployed application.
+replicaCount: 1
+service:
+  name: kafka
+pv:
+  volumeID: aws://eu-west-1a/vol-075df207013d658e1
+  zone: eu-west-1b
