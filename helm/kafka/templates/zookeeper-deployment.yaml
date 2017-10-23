@@ -1,0 +1,44 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ .Values.service.name }}-zookeeper
+  labels:
+    chart: "{{ .Chart.Name | trunc 63 }}"
+    chartVersion: "{{ .Chart.Version | trunc 63 }}"
+    visualize: "true"
+    app: {{ .Values.service.name }}-zookeeper
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.service.name }}-zookeeper
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.service.name }}-zookeeper
+        visualize: "true"
+    spec:
+      containers:
+      - name: zookeeper
+        image: {{ .Values.images.zookeeper }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+        - name: ZOO_LOG4J_PROP
+          value: "INFO, CONSOLE"
+        ports:
+        - containerPort: {{ .Values.ports.zookeeper }}
+        livenessProbe:
+          initialDelaySeconds: 5
+          tcpSocket:
+            port: {{ .Values.ports.zookeeper }}
+        volumeMounts:
+        - name: kafka-persistent-storage
+          mountPath: /opt/zookeeper-3.4.9/data
+          subPath: zk-data
+        resources:
+{{ toYaml .Values.zookeeperResources | indent 12 }}
+      volumes:
+       - name: kafka-persistent-storage
+         persistentVolumeClaim:
+           claimName: "{{ .Values.service.name }}-pvc"

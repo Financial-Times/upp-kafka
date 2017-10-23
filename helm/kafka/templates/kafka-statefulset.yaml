@@ -1,5 +1,5 @@
-apiVersion: extensions/v1beta1
-kind: Deployment
+apiVersion: apps/v1beta1
+kind: StatefulSet
 metadata:
   name: {{ .Values.service.name }} 
   labels:
@@ -8,7 +8,8 @@ metadata:
     visualize: "true" 
     app: {{ .Values.service.name }} 
 spec:
-  replicas: {{ .Values.replicaCount }} 
+  replicas: 1 # keeping a single replica in the stateful set
+  serviceName: {{.Values.service.name}}
   selector: 
     matchLabels:
       app: {{ .Values.service.name }}
@@ -30,9 +31,9 @@ spec:
         - name: DOCKER_HOST
           value: "localhost:2375"
         - name: KAFKA_ADVERTISED_HOST_NAME
-          value: "127.0.0.1"
+          value: "{{.Values.service.name}}-0.kafka.default.svc.cluster.local"
         - name: KAFKA_ZOOKEEPER_CONNECT
-          value: "localhost:{{ .Values.ports.zookeeper }}"
+          value: "{{.Values.service.name}}-zookeeper:{{ .Values.ports.zookeeper }}"
         - name: KAFKA_BROKER_ID
           value: "1"
         - name: KAFKA_PORT
@@ -51,45 +52,8 @@ spec:
            subPath: kafka-data
         resources: 
 {{ toYaml .Values.kafkaResources | indent 12 }}
-      - name: zookeeper
-        image: {{ .Values.images.zookeeper }}
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
-        env:
-        - name: ZOO_LOG4J_PROP
-          value: "ERROR, CONSOLE"
-        ports:
-        - containerPort: {{ .Values.ports.zookeeper }}
-        livenessProbe:
-          initialDelaySeconds: 5
-          tcpSocket:
-            port: {{ .Values.ports.zookeeper }}
-        volumeMounts:
-        - name: kafka-persistent-storage
-          mountPath: /opt/zookeeper-3.4.9/data
-          subPath: zk-data
-        resources: 
-{{ toYaml .Values.zookeeperResources | indent 12 }}
-      - name: kafka-proxy
-        image: {{ .Values.images.kafkaProxy }}
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
-        env:
-        - name: RP_FETCH_MESSAGE_MAX_BYTES
-          value: "16777216"
-        - name: RP_CONSUMER_REQUEST_MAX_BYTES
-          value: "17825792"
-        - name: RP_ZOOKEEPER_CONNECT
-          value: "localhost:2181"
-        - name: RP_MAX_REQUEST_SIZE
-          value: "17825792"
-        ports:
-        - containerPort: {{ .Values.ports.kafkaProxy }}
-        livenessProbe:
-          initialDelaySeconds: 5
-          tcpSocket:
-            port: {{ .Values.ports.kafkaProxy }}
-        resources: 
-{{ toYaml .Values.kafkaProxyResources | indent 12 }}
       volumes:
        - name: kafka-persistent-storage
          persistentVolumeClaim:
            claimName: "{{ .Values.service.name }}-pvc"
+

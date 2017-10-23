@@ -1,3 +1,4 @@
+# Headless service for kafka driving the stateful set DNS
 kind: Service
 apiVersion: v1
 metadata:
@@ -7,17 +8,12 @@ metadata:
     chartVersion: "{{ .Chart.Version | trunc 63 }}"
     app: {{.Values.service.name}}
     visualize: "true" 
-    hasHealthcheck: "{{ .Values.service.hasHealthcheck }}" 
+    hasHealthcheck: "false"
 spec:
+  clusterIP: None
   ports: 
-    - port: {{ .Values.ports.kafkaProxy }}
-      name: "kafka-proxy"
-      targetPort: {{ .Values.ports.kafkaProxy }}
     - port: {{ .Values.ports.kafka }}
       name: "kafka"
       targetPort: {{ .Values.ports.kafka }}
-    - port: {{ .Values.ports.zookeeper }}
-      name: "zookeeper"
-      targetPort: {{ .Values.ports.zookeeer }}
-  selector: 
+  selector:
     app: {{ .Values.service.name }} 

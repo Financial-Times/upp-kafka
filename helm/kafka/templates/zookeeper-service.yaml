@@ -1,0 +1,17 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{.Values.service.name}}-zookeeper
+  labels:
+    chart: "{{ .Chart.Name | trunc 63 }}"
+    chartVersion: "{{ .Chart.Version | trunc 63 }}"
+    app: {{.Values.service.name}}-zookeeper
+    visualize: "true" 
+    hasHealthcheck: "false"
+spec:
+  ports: 
+    - port: {{ .Values.ports.zookeeper }}
+      name: "zookeeper"
+      targetPort: {{ .Values.ports.zookeeer }}
+  selector: 
+    app: {{ .Values.service.name }}-zookeeper
