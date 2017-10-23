@@ -4,4 +4,3 @@ service:
   name: kafka
 pv:
   volumeID: aws://eu-west-1a/vol-0bc9f9cf61006f0bc
-  zone: eu-west-1a
