@@ -2,16 +2,17 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: kafka-rest-proxy
+  name: {{ .Values.service.name }}-rest-proxy
   labels:
     chart: "{{ .Chart.Name | trunc 63 }}"
     chartVersion: "{{ .Chart.Version | trunc 63 }}"
-    app: kafka-rest-proxy
-    visualize: "true" 
+    app: {{ .Values.service.name }}-rest-proxy
+    visualize: "true"
+    hasHealthcheck: "false"
 spec:
   ports: 
     - port: 8080
-      name: "kafka-proxy-access-from-varnish-in-pub-cluster"
+      name: "kafka-proxy"
       targetPort: {{ .Values.ports.kafkaProxy }}
-  selector: 
-    app: {{ .Values.service.name }} 
+  selector:
+    app: {{ .Values.service.name }}-rest-proxy

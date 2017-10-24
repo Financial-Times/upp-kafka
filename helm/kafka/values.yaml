@@ -3,8 +3,7 @@
 # Declare variables to be passed into your templates.
 service:
   name: "" # The name of the service, should be defined in the specific app-configs folder.
-  hasHealthcheck: "true"
-replicaCount: 1
+  hasHealthcheck: "false"
 image:
   pullPolicy: IfNotPresent
 pv:
