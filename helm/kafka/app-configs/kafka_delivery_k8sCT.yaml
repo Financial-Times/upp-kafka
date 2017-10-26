@@ -1,5 +1,0 @@
-# Values used for the deployed application.
-service:
-  name: kafka
-pv:
-  volumeID: aws://eu-west-1a/vol-0204b7f611aeaf6bd
