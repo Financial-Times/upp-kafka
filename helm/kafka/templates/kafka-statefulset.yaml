@@ -19,6 +19,13 @@ spec:
         app: {{ .Values.service.name }}
         visualize: "true" 
     spec:
+      tolerations:
+      # Making sure that Kafka will be scheduled on dedicated nodes. These nodes are tainted by the provisioner.
+      - key: "dedicated"
+        operator: "Equal"
+        value: "kafka"
+        effect: "NoSchedule"
+
       containers: 
       - name: kafka
         image: {{ .Values.images.kafka }}

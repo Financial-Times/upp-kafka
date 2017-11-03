@@ -19,6 +19,13 @@ spec:
         app: {{ .Values.service.name }}-rest-proxy
         visualize: "true"
     spec:
+      tolerations:
+      # Making sure that Kafka-proxy will be scheduled on dedicated nodes for kafka. These nodes are tainted by the provisioner.
+      - key: "dedicated"
+        operator: "Equal"
+        value: "kafka"
+        effect: "NoSchedule"
+
       containers:
       - name: kafka-proxy
         image: {{ .Values.images.kafkaProxy }}
