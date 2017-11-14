@@ -34,6 +34,15 @@ spec:
                 operator: In
                 values:
                 - kafka-worker
+      initContainers:
+        # Wait until zk is accessible
+        - name: waitfordns
+          image: "alpine:3.6"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}}
+          command:
+            - /bin/sh
+            - -c
+            - "i=0; while [ $i -lt 120 ]; do ping -c1 {{ .Values.service.name }}-zookeeper && break; let i=i+1; sleep 1; done"
       containers:
       - name: kafka
         image: {{ .Values.images.kafka }}
