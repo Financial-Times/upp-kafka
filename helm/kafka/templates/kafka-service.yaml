@@ -9,6 +9,10 @@ metadata:
     app: {{.Values.service.name}}
     visualize: "true" 
     hasHealthcheck: "false"
+  annotations:
+    # https://github.com/kubernetes/kubernetes/blob/master/pkg/controller/endpoint/endpoints_controller.go#L56
+    # create endpoints for unready pods - mongo needs to resolve the cluster member addresses on startup
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
 spec:
   clusterIP: None
   ports: 
