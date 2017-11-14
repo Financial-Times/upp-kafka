@@ -19,6 +19,21 @@ spec:
         app: {{ .Values.service.name }}-zookeeper
         visualize: "true"
     spec:
+      tolerations:
+      # Making sure that Zookeeper will be scheduled on dedicated nodes. These nodes are tainted by the provisioner.
+      - key: "dedicated"
+        operator: "Equal"
+        value: "kafka"
+        effect: "NoSchedule"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kube-aws.coreos.com/role
+                operator: In
+                values:
+                - kafka-worker
       containers:
       - name: zookeeper
         image: {{ .Values.images.zookeeper }}

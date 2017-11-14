@@ -19,7 +19,22 @@ spec:
         app: {{ .Values.service.name }}
         visualize: "true" 
     spec:
-      containers: 
+      tolerations:
+      # Making sure that Kafka will be scheduled on dedicated nodes. These nodes are tainted by the provisioner.
+      - key: "dedicated"
+        operator: "Equal"
+        value: "kafka"
+        effect: "NoSchedule"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kube-aws.coreos.com/role
+                operator: In
+                values:
+                - kafka-worker
+      containers:
       - name: kafka
         image: {{ .Values.images.kafka }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
