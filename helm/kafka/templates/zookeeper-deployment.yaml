@@ -34,7 +34,6 @@ spec:
                 operator: In
                 values:
                 - kafka-worker
-
       containers:
       - name: zookeeper
         image: {{ .Values.images.zookeeper }}

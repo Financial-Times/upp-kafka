@@ -34,8 +34,7 @@ spec:
                 operator: In
                 values:
                 - kafka-worker
-
-      containers: 
+      containers:
       - name: kafka
         image: {{ .Values.images.kafka }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
