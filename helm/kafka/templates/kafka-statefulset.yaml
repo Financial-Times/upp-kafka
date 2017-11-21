@@ -58,7 +58,7 @@ spec:
         ports:
         - containerPort: {{ .Values.ports.kafka }}
         livenessProbe:
-          initialDelaySeconds: 5
+          initialDelaySeconds: 60
           tcpSocket:
             port: {{ .Values.ports.kafka }}
         volumeMounts:

@@ -50,7 +50,7 @@ spec:
         ports:
         - containerPort: {{ .Values.ports.kafkaProxy }}
         livenessProbe:
-          initialDelaySeconds: 5
+          initialDelaySeconds: 90
           tcpSocket:
             port: {{ .Values.ports.kafkaProxy }}
         resources:
