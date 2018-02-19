@@ -1,12 +1,13 @@
 # Kafka
 
 Helm chart containing the following:
-1. kafka
-1. zookeeper
+1. [kafka](https://github.com/wurstmeister/kafka-docker/releases/tag/0.8.2.0)
+1. [zookeeper](https://github.com/wurstmeister/zookeeper-docker)
 1. [kafka-rest-proxy](https://github.com/Financial-Times/kafka-proxy)
 
 ## Useful information
 [Kafka panic guide](https://sites.google.com/a/ft.com/universal-publishing/ops-guides/kafka-panic-guide)
+
 [Kafka REST proxy guide](https://sites.google.com/a/ft.com/universal-publishing/ops-guides/kafka-rest-proxy-guide)
 ## Kubernetes details
 Kafka is deployed as a [Stateful set](helm/kafka/templates/kafka-statefulset.yaml).
