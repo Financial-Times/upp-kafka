@@ -37,7 +37,7 @@ spec:
       initContainers:
       - name: waitforzookeeper
         image: "alpine:3.7"
-        imagePullPolicy: {{ $values.image.pullPolicy }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
         command: ['/bin/sh','-c',
         'apk update; apk add netcat-openbsd
         i=0;
