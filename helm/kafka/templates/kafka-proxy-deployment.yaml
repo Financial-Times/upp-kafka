@@ -34,6 +34,17 @@ spec:
                 operator: In
                 values:
                 - kafka-worker
+      initContainers:
+      - name: waitforkafka
+        image: "alpine:3.7"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        command: ['/bin/sh','-c',
+        'apk update; apk add netcat-openbsd
+        i=0;
+        while [ $i -lt 120 ]; do
+          nc -zw 5 {{ .Values.service.name }}-0.kafka.default.svc.cluster.local {{ .Values.ports.kafka }} && break;
+          let i=i+5;
+        done']
       containers:
       - name: kafka-proxy
         image: {{ .Values.images.kafkaProxy }}
