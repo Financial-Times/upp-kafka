@@ -35,7 +35,7 @@ spec:
                 values:
                 - kafka-worker
       initContainers:
-      - name: waitforzookeeper
+      - name: waitforkafka
         image: "alpine:3.7"
         imagePullPolicy: {{ $values.image.pullPolicy }}
         command: ['/bin/sh','-c',
@@ -44,7 +44,7 @@ spec:
         while [ $i -lt 120 ]; do
           nc -zw 5 {{ $values.service.name }}-0.kafka.default.svc.cluster.local {{ $values.ports.kafka }} && break;
           let i=i+5;
-        done'
+        done']
       containers:
       - name: kafka-proxy
         image: {{ .Values.images.kafkaProxy }}

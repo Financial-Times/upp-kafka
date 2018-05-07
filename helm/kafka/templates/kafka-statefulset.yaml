@@ -44,7 +44,7 @@ spec:
         while [ $i -lt 120 ]; do
           nc -zw 5 kafka-zookeeper 2181 {{ $values.service.name }}-zookeeper {{ $values.ports.zookeeper }} && break;
           let i=i+5;
-        done'
+        done']
       containers:
       - name: kafka
         image: {{ .Values.images.kafka }}
