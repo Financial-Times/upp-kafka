@@ -42,7 +42,7 @@ spec:
         'apk update; apk add netcat-openbsd
         i=0;
         while [ $i -lt 120 ]; do
-          nc -zw 5 kafka-zookeeper 2181 {{ $values.service.name }}-zookeeper {{ $values.ports.zookeeper }} && break;
+          nc -zw 5 kafka-zookeeper 2181 {{ .Values.service.name }}-zookeeper {{ .Values.ports.zookeeper }} && break;
           let i=i+5;
         done']
       containers:
