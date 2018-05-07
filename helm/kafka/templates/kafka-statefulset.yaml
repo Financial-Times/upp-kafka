@@ -34,6 +34,17 @@ spec:
                 operator: In
                 values:
                 - kafka-worker
+      initContainers:
+      - name: waitforzookeeper
+        image: "alpine:3.7"
+        imagePullPolicy: {{ $values.image.pullPolicy }}
+        command: ['/bin/sh','-c',
+        'apk update; apk add netcat-openbsd
+        i=0;
+        while [ $i -lt 120 ]; do
+          nc -zw 5 kafka-zookeeper 2181 {{ $values.service.name }}-zookeeper {{ $values.ports.zookeeper }} && break;
+          let i=i+5;
+        done'
       containers:
       - name: kafka
         image: {{ .Values.images.kafka }}
