@@ -54,6 +54,10 @@ spec:
         resources:
 {{ toYaml .Values.zookeeperResources | indent 12 }}
       volumes:
-       - name: kafka-persistent-storage
-         persistentVolumeClaim:
-           claimName: "{{ .Values.service.name }}-pvc"
+        - name: kafka-persistent-storage
+        {{- if eq .Values.ephemeral_storage true }}
+          emptyDir: {}
+        {{- else }}
+          persistentVolumeClaim:
+            claimName: "{{ .Values.service.name }}-pvc"
+        {{- end }}

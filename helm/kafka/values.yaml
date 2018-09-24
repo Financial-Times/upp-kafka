@@ -20,3 +20,4 @@ ports:
   kafka: 9092
   zookeeper: 2181
   kafkaProxy: 8082
+ephemeral_storage: false
