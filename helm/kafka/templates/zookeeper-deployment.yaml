@@ -49,7 +49,7 @@ spec:
             port: {{ .Values.ports.zookeeper }}
         volumeMounts:
         - name: kafka-persistent-storage
-          mountPath: /opt/zookeeper-3.4.9/data
+          mountPath: /opt/zookeeper-3.4.13/data
           subPath: zk-data
         resources:
 {{ toYaml .Values.zookeeperResources | indent 12 }}
