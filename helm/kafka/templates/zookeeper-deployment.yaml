@@ -50,7 +50,7 @@ spec:
         volumeMounts:
         - name: kafka-persistent-storage
           mountPath: /opt/zookeeper-3.4.13/data
-          subPath: zk-data
+          subPath: zk-data-3.4.13
         resources:
 {{ toYaml .Values.zookeeperResources | indent 12 }}
       volumes:
