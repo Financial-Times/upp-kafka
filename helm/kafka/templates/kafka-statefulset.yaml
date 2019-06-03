@@ -55,6 +55,10 @@ spec:
           value: "{{ .Values.ports.kafka }}"
         - name: KAFKA_ADVERTISED_PORT
           value: "{{ .Values.ports.kafka }}"
+        {{- if eq .Values.ephemeral_storage true }}
+        - name: KAFKA_LOG_RETENTION_BYTES
+          value: "134217728"
+        {{- end }}
         ports:
         - containerPort: {{ .Values.ports.kafka }}
         livenessProbe:
@@ -68,7 +72,10 @@ spec:
         resources: 
 {{ toYaml .Values.kafkaResources | indent 12 }}
       volumes:
-       - name: kafka-persistent-storage
-         persistentVolumeClaim:
-           claimName: "{{ .Values.service.name }}-pvc"
-
+        - name: kafka-persistent-storage
+        {{- if eq .Values.ephemeral_storage true }}
+          emptyDir: {}
+        {{- else }}
+          persistentVolumeClaim:
+            claimName: "{{ .Values.service.name }}-pvc"
+        {{- end }}
