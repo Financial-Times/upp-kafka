@@ -15,7 +15,7 @@ pv:
 images:
   kafka: wurstmeister/kafka:0.8.2.0
   zookeeper: wurstmeister/zookeeper
-  kafkaProxy: coco/kafka-proxy:v1.0.0
+  kafkaProxy: coco/kafka-proxy:v1.0.1
 ports:
   kafka: 9092
   zookeeper: 2181
