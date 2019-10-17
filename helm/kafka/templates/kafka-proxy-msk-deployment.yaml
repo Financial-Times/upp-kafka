@@ -46,3 +46,5 @@ spec:
           initialDelaySeconds: 90
           tcpSocket:
             port: {{ .Values.ports.kafkaProxy }}
+        resources:
+{{ toYaml .Values.kafkaProxyResources | indent 12 }}

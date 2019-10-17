@@ -21,3 +21,8 @@ ports:
   zookeeper: 2181
   kafkaProxy: 8082
 ephemeral_storage: false
+kafkaProxyResources:
+  requests:
+    memory: 256Mi
+  limits:
+    memory: 2Gi
