@@ -1,0 +1,18 @@
+# This service is needed by the routing varnish in the pub cluster to route to the kafka proxy
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Values.service.name }}-rest-proxy-msk
+  labels:
+    chart: "{{ .Chart.Name | trunc 63 }}"
+    chartVersion: "{{ .Chart.Version | trunc 63 }}"
+    app: {{ .Values.service.name }}-rest-proxy-msk
+    visualize: "true"
+    hasHealthcheck: "false"
+spec:
+  ports: 
+    - port: 8080
+      name: "kafka-proxy-msk"
+      targetPort: {{ .Values.ports.kafkaProxy }}
+  selector:
+    app: {{ .Values.service.name }}-rest-proxy-msk
