@@ -19,19 +19,28 @@ spec:
         app: {{ .Values.service.name }}-rest-proxy-msk
         visualize: "true"
     spec:
+      enableServiceLinks: false
       containers:
       - name: kafka-proxy-msk
         image: confluentinc/cp-kafka-rest:5.2.3
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         env:
+        - name: KAFKA_REST_ID
+          value: delivery
         - name: KAFKA_REST_ZOOKEEPER_CONNECT
-          value: "z-2.upp-k8s-kafka.729803.c2.kafka.eu-west-1.amazonaws.com:2181,z-1.upp-k8s-kafka.729803.c2.kafka.eu-west-1.amazonaws.com:2181,z-3.upp-k8s-kafka.729803.c2.kafka.eu-west-1.amazonaws.com:2181"
+          valueFrom:
+            configMapKeyRef:
+              name: global-config
+              key: zookeeper-msk.url
         - name: KAFKA_REST_BOOTSTRAP_SERVERS
-          value: "b-2.upp-k8s-kafka.729803.c2.kafka.eu-west-1.amazonaws.com:9094,b-3.upp-k8s-kafka.729803.c2.kafka.eu-west-1.amazonaws.com:9094,b-1.upp-k8s-kafka.729803.c2.kafka.eu-west-1.amazonaws.com:9094"
+          valueFrom:
+            configMapKeyRef:
+              name: global-config
+              key: kafka-msk.url-tls
         - name: KAFKA_REST_LISTENERS
           value: http://0.0.0.0:8082
         - name: KAFKA_REST_HOST_NAME
-          value: localhost
+          value: kafka-rest-proxy-msk:8080
         - name: KAFKA_REST_CLIENT_SECURITY_PROTOCOL
           value: SSL
         - name: KAFKA_REST_FETCH_MESSAGE_MAX_BYTES
