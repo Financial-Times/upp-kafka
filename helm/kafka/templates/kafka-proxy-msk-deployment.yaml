@@ -36,7 +36,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               name: global-config
-              key: kafka-msk.url
+              key: kafka-msk.url-tls
         - name: KAFKA_REST_LISTENERS
           value: http://0.0.0.0:8082
         - name: KAFKA_REST_HOST_NAME
