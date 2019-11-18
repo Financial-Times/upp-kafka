@@ -45,8 +45,12 @@ spec:
           value: SSL
         - name: KAFKA_REST_FETCH_MESSAGE_MAX_BYTES
           value: "16777216"
+        - name: KAFKA_REST_FETCH_MIN_BYTES
+          value: "1"
         - name: KAFKA_REST_CONSUMER_REQUEST_MAX_BYTES
           value: "17825792"
+        - name: KAFKA_REST_CONSUMER_REQUEST_TIMEOUT_MS
+          value: "10000"
         - name: KAFKA_REST_CONSUMER_THREADS
           value: "-1"
         - name: KAFKA_REST_MAX_REQUEST_SIZE
