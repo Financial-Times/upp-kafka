@@ -26,29 +26,20 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         env:
         - name: KAFKA_REST_ID
-          value: delivery
-        - name: KAFKA_REST_ZOOKEEPER_CONNECT
-          valueFrom:
-            configMapKeyRef:
-              name: global-config
-              key: zookeeper-msk.url
+          value: {{ .Values.service.proxyID }}
         - name: KAFKA_REST_BOOTSTRAP_SERVERS
           valueFrom:
             configMapKeyRef:
               name: global-config
-              key: kafka-msk.url-tls
+              key: kafka-msk.url
         - name: KAFKA_REST_LISTENERS
           value: http://0.0.0.0:8082
         - name: KAFKA_REST_HOST_NAME
           value: kafka-rest-proxy-msk:8080
-        - name: KAFKA_REST_CLIENT_SECURITY_PROTOCOL
-          value: SSL
         - name: KAFKA_REST_FETCH_MESSAGE_MAX_BYTES
           value: "16777216"
         - name: KAFKA_REST_FETCH_MIN_BYTES
           value: "1"
-        - name: KAFKA_REST_CONSUMER_INSTANCE_TIMEOUT_MS
-          value: "30000"
         - name: KAFKA_REST_CONSUMER_REQUEST_MAX_BYTES
           value: "17825792"
         - name: KAFKA_REST_CONSUMER_REQUEST_TIMEOUT_MS

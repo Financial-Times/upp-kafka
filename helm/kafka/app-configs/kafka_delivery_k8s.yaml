@@ -1,4 +1,5 @@
 # Values used for the deployed application.
 service:
   name: kafka
+  proxyID: delivery
 ephemeral_storage: true
