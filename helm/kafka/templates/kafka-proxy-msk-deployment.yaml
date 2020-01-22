@@ -48,6 +48,8 @@ spec:
           value: "-1"
         - name: KAFKA_REST_MAX_REQUEST_SIZE
           value: "17825792"
+        - name: KAFKAREST_HEAP_OPTS
+          value: "-Xmx768m"
         ports:
         - containerPort: {{ .Values.ports.kafkaProxy }}
         livenessProbe:
