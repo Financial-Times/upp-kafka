@@ -49,7 +49,9 @@ spec:
         - name: KAFKA_REST_MAX_REQUEST_SIZE
           value: "17825792"
         - name: KAFKA_REST_HEAP_OPTS
-          value: "-Xmx1g"
+          value: "-Xmx1536m"
+        - name: KAFKA_REST_MAX_POLL_RECORDS
+          value: "10"
         ports:
         - containerPort: {{ .Values.ports.kafkaProxy }}
         livenessProbe:
