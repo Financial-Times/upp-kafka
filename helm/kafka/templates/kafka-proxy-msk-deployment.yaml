@@ -22,7 +22,7 @@ spec:
       enableServiceLinks: false
       containers:
       - name: kafka-proxy-msk
-        image: confluentinc/cp-kafka-rest:5.2.3
+        image: confluentinc/cp-kafka-rest:5.3.2
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         env:
         - name: KAFKA_REST_ID
