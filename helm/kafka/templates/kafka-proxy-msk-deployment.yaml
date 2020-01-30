@@ -50,6 +50,8 @@ spec:
           value: "17825792"
         - name: KAFKAREST_HEAP_OPTS
           value: "-Xmx768m"
+        - name: KAFKA_REST_MAX_POLL_RECORDS
+          value: "10"
         ports:
         - containerPort: {{ .Values.ports.kafkaProxy }}
         livenessProbe:
