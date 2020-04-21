@@ -19,6 +19,13 @@ spec:
         app: {{ .Values.service.name }}-rest-proxy
         visualize: "true"
     spec:
+{{- if .Values.eksCluster }}
+      tolerations:
+      - key: ng-kafka
+        operator: Equal
+        value: "false"
+        effect: NoExecute
+{{- else }}
       tolerations:
       # Making sure that Kafka-proxy will be scheduled on dedicated nodes for kafka. These nodes are tainted by the provisioner.
       - key: "dedicated"
@@ -34,6 +41,7 @@ spec:
                 operator: In
                 values:
                 - kafka-worker
+{{- end }}
       containers:
       - name: kafka-proxy
         image: {{ .Values.images.kafkaProxy }}
