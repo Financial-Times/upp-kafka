@@ -19,6 +19,13 @@ spec:
         app: {{ .Values.service.name }}-zookeeper
         visualize: "true"
     spec:
+{{- if .Values.eksCluster }}
+      tolerations:
+      - key: ng-kafka
+        operator: Equal
+        value: "false"
+        effect: NoExecute
+{{- else }}
       tolerations:
       # Making sure that Zookeeper will be scheduled on dedicated nodes. These nodes are tainted by the provisioner.
       - key: "dedicated"
@@ -34,6 +41,7 @@ spec:
                 operator: In
                 values:
                 - kafka-worker
+{{- end }}
       containers:
       - name: zookeeper
         image: {{ .Values.images.zookeeper }}
