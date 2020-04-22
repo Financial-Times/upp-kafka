@@ -24,7 +24,7 @@ spec:
       - key: ng-kafka
         operator: Equal
         value: "false"
-        effect: NoExecute
+        effect: "NoSchedule"
 {{- else }}
       tolerations:
       # Making sure that Kafka will be scheduled on dedicated nodes. These nodes are tainted by the provisioner.
