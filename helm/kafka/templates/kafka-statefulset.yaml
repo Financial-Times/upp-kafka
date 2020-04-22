@@ -25,6 +25,15 @@ spec:
         operator: Equal
         value: "false"
         effect: "NoSchedule"
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: node-role.kubernetes.io/ng-kafka
+                  operator: In
+                  values:
+                  - "true"
 {{- else }}
       tolerations:
       # Making sure that Kafka will be scheduled on dedicated nodes. These nodes are tainted by the provisioner.
