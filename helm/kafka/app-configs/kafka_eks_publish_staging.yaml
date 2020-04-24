@@ -1,0 +1,4 @@
+# Values used for the deployed application.
+service:
+  name: kafka
+eksCluster: true
