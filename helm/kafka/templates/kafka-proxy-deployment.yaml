@@ -21,9 +21,9 @@ spec:
     spec:
 {{- if .Values.eksCluster }}
       tolerations:
-      - key: role
+      - key: kafka
         operator: Equal
-        value: "kafka"
+        value: "false"
         effect: "NoSchedule"
       affinity:
         nodeAffinity:
