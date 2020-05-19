@@ -21,19 +21,19 @@ spec:
     spec:
 {{- if .Values.eksCluster }}
       tolerations:
-      - key: ng-kafka
+      - key: role
         operator: Equal
-        value: "false"
+        value: "kafka"
         effect: "NoSchedule"
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: node-role.kubernetes.io/ng-kafka
+              - key: role
                 operator: In
                 values:
-                - "true"
+                - "kafka"
 {{- else }}
       tolerations:
       # Making sure that Zookeeper will be scheduled on dedicated nodes. These nodes are tainted by the provisioner.
