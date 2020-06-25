@@ -1,5 +1,9 @@
 ---
+{{- if .Values.eksCluster }}
+apiVersion: apps/v1
+{{- else }}
 apiVersion: extensions/v1beta1
+{{- end }}
 kind: Deployment
 metadata:
   name: {{ .Values.service.name }}-zookeeper
@@ -19,6 +23,22 @@ spec:
         app: {{ .Values.service.name }}-zookeeper
         visualize: "true"
     spec:
+{{- if .Values.eksCluster }}
+      tolerations:
+      - key: kafka
+        operator: Equal
+        value: "false"
+        effect: "NoSchedule"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: role
+                operator: In
+                values:
+                - "kafka"
+{{- else }}
       tolerations:
       # Making sure that Zookeeper will be scheduled on dedicated nodes. These nodes are tainted by the provisioner.
       - key: "dedicated"
@@ -34,6 +54,7 @@ spec:
                 operator: In
                 values:
                 - kafka-worker
+{{- end }}
       containers:
       - name: zookeeper
         image: {{ .Values.images.zookeeper }}
