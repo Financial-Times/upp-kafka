@@ -36,3 +36,5 @@ runbooks:
     systemCodes:
         # paths are relative to root, omitting ./ (case-insensitive)
         kafka-proxy: runbooks/kafka-proxy_runbook.md
+        upp-kafka: runbooks/upp-kafka_runbook.md
+        upp-zookeeper: runbooks/upp-zookeeper_runbook.md
