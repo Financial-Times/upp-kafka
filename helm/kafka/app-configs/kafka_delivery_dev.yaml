@@ -1,4 +1,0 @@
-# Values used for the deployed application.
-service:
-  name: kafka
-ephemeral_storage: true

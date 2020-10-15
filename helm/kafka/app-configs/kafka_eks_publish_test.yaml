@@ -2,4 +2,3 @@
 service:
   name: kafka
 ephemeral_storage: true
-eksCluster: true
