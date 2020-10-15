@@ -1,9 +1,5 @@
 ---
-{{- if .Values.eksCluster }}
 apiVersion: apps/v1
-{{- else }}
-apiVersion: extensions/v1beta1
-{{- end }}
 kind: Deployment
 metadata:
   name: {{ .Values.service.name }}-rest-proxy
@@ -23,7 +19,6 @@ spec:
         app: {{ .Values.service.name }}-rest-proxy
         visualize: "true"
     spec:
-{{- if .Values.eksCluster }}
       tolerations:
       - key: kafka
         operator: Equal
@@ -38,23 +33,6 @@ spec:
                 operator: In
                 values:
                 - "kafka"
-{{- else }}
-      tolerations:
-      # Making sure that Kafka-proxy will be scheduled on dedicated nodes for kafka. These nodes are tainted by the provisioner.
-      - key: "dedicated"
-        operator: "Equal"
-        value: "kafka"
-        effect: "NoSchedule"
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: kube-aws.coreos.com/role
-                operator: In
-                values:
-                - kafka-worker
-{{- end }}
       containers:
       - name: kafka-proxy
         image: {{ .Values.images.kafkaProxy }}
