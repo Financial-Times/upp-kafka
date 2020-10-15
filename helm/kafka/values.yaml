@@ -21,4 +21,3 @@ ports:
   zookeeper: 2181
   kafkaProxy: 8082
 ephemeral_storage: false
-eksCluster: false
