@@ -1,10 +1,18 @@
+<!--
+    Written in the format prescribed by https://github.com/Financial-Times/runbook.md.
+    Any future edits should abide by this format.
+-->
 # UPP - ZooKeeper
 
 UPP ZooKeeper is the deployment of Apache ZooKeeper within the UPP clusters used by UPP Kafka. Apache ZooKeeper is an open-source service for distributed systems offering a hierarchical key-value store, which is used to provide a distributed configuration service, synchronization service, and naming registry for large distributed systems.
 
+## Code
+
+upp-zookeeper
+
 ## Primary URL
 
-<https://github.com/Financial-Times/upp-kafka>
+https://github.com/Financial-Times/upp-kafka
 
 ## Service Tier
 
@@ -13,22 +21,6 @@ Platinum
 ## Lifecycle Stage
 
 Production
-
-## Delivered By
-
-content
-
-## Supported By
-
-content
-
-## Known About By
-
-- mihail.mihaylov
-- hristo.georgiev
-- elitsa.pavlova
-- kalin.arsov
-- boyko.boykov
 
 ## Host Platform
 
@@ -45,6 +37,20 @@ No
 ## Contains Sensitive Data
 
 No
+
+<!-- Placeholder - remove HTML comment markers to activate
+## Can Download Personal Data
+Choose Yes or No
+
+...or delete this placeholder if not applicable to this system
+-->
+
+<!-- Placeholder - remove HTML comment markers to activate
+## Can Contact Individuals
+Choose Yes or No
+
+...or delete this placeholder if not applicable to this system
+-->
 
 ## Failover Architecture Type
 
@@ -88,6 +94,14 @@ Manual
 
 Manual failover is needed when a new version of the service is deployed to production because the publishing pipeline is depending on it.
 
+<!-- Placeholder - remove HTML comment markers to activate
+## Heroku Pipeline Name
+Enter descriptive text satisfying the following:
+This is the name of the Heroku pipeline for this system. If you don't have a pipeline, this is the name of the app in Heroku. A pipeline is a group of Heroku apps that share the same codebase where each app in a pipeline represents the different stages in a continuous delivery workflow, i.e. staging, production.
+
+...or delete this placeholder if not applicable to this system
+-->
+
 ## Key Management Process Type
 
 Manual
@@ -99,10 +113,11 @@ To access the service clients need to provide basic auth credentials. To rotate 
 ## Monitoring
 
 UPP ZooKeeper doesn't have monitoring of its own but the UPP Kafka Lagcheck service is depending on Kafka and ZooKeeper and one can check its health status:
-- Publishing EU UPP Kafka Lagcheck service health: <https://upp-prod-publish-eu.upp.ft.com/__health/__pods-health?service-name=kafka-lagcheck>
-- Publishing US UPP Kafka Lagcheck service health: <https://upp-prod-publish-us.upp.ft.com/__health/__pods-health?service-name=kafka-lagcheck>
-- Delivery EU UPP Kafka Lagcheck service health: <https://upp-prod-delivery-eu.upp.ft.com/__health/__pods-health?service-name=kafka-lagcheck>
-- Delivery US UPP Kafka Lagcheck service health: <https://upp-prod-delivery-us.upp.ft.com/__health/__pods-health?service-name=kafka-lagcheck>
+
+*   Publishing EU UPP Kafka Lagcheck service health: <https://upp-prod-publish-eu.upp.ft.com/__health/__pods-health?service-name=kafka-lagcheck>
+*   Publishing US UPP Kafka Lagcheck service health: <https://upp-prod-publish-us.upp.ft.com/__health/__pods-health?service-name=kafka-lagcheck>
+*   Delivery EU UPP Kafka Lagcheck service health: <https://upp-prod-delivery-eu.upp.ft.com/__health/__pods-health?service-name=kafka-lagcheck>
+*   Delivery US UPP Kafka Lagcheck service health: <https://upp-prod-delivery-us.upp.ft.com/__health/__pods-health?service-name=kafka-lagcheck>
 
 ## First Line Troubleshooting
 
