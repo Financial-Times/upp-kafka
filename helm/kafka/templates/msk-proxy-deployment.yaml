@@ -1,0 +1,56 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.service.name }}-rest-proxy-msk
+  labels:
+    chart: "{{ .Chart.Name | trunc 63 }}"
+    chartVersion: "{{ .Chart.Version | trunc 63 }}"
+    visualize: "true"
+    app: {{ .Values.service.name }}-rest-proxy-msk
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.service.name }}-rest-proxy-msk
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.service.name }}-rest-proxy-msk
+        visualize: "true"
+    spec:
+      tolerations:
+        - key: kafka
+          operator: Equal
+          value: "false"
+          effect: "NoSchedule"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: role
+                    operator: In
+                    values:
+                      - "kafka"
+      containers:
+        - name: kafka-proxy
+          image: {{ .Values.images.kafkaProxy }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: RP_FETCH_MESSAGE_MAX_BYTES
+              value: "16777216"
+            - name: RP_CONSUMER_REQUEST_MAX_BYTES
+              value: "17825792"
+            - name: RP_ZOOKEEPER_CONNECT
+              value: "z-1.upp-poc-kafka.vmh5a4.c6.kafka.eu-west-1.amazonaws.com:{{ .Values.ports.zookeeper }}"
+            - name: RP_MAX_REQUEST_SIZE
+              value: "17825792"
+          ports:
+            - containerPort: {{ .Values.ports.kafkaProxy }}
+          livenessProbe:
+            initialDelaySeconds: 90
+            tcpSocket:
+              port: {{ .Values.ports.kafkaProxy }}
+          resources:
+{{ toYaml .Values.kafkaProxyResources | indent 12 }}
