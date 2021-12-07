@@ -14,22 +14,6 @@ Platinum
 
 Production
 
-## Delivered By
-
-content
-
-## Supported By
-
-content
-
-## Known About By
-
-- mihail.mihaylov
-- hristo.georgiev
-- elitsa.pavlova
-- kalin.arsov
-- boyko.boykov
-
 ## Host Platform
 
 AWS
@@ -47,10 +31,6 @@ No
 ## Contains Sensitive Data
 
 No
-
-## Dependencies
-
-- upp-zookeeper
 
 ## Failover Architecture Type
 
