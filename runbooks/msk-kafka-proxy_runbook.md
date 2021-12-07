@@ -1,18 +1,18 @@
-# UPP - Kafka REST Proxy
+# UPP - MSK Kafka REST Proxy
 
-The purpose of the Kafka REST Proxy service is to provide resilient communication between the services in the UPP Kubernetes clusters and Kafka/Zookeeper service via an easier to implement REST API interface.
+The purpose of the MSK Kafka REST Proxy service is to provide resilient communication between the services in the UPP Kubernetes clusters and MSK Kafka/Zookeeper service via an easier to implement REST API interface.
 
 ## Code
 
-kafka-proxy
+msk-kafka-proxy
 
 ## Primary URL
 
-https://upp-prod-delivery-glb.upp.ft.com/__kafka-rest-proxy/
+https://upp-prod-delivery-glb.upp.ft.com/__kafka-rest-proxy-msk/
 
 ## Service Tier
 
-Platinum
+Bronze
 
 ## Lifecycle Stage
 
@@ -25,7 +25,7 @@ AWS
 ## Architecture
 
 This service runs a Docker image defined in https://github.com/Financial-Times/kafka-proxy . The image is based on a fork of an old version of https://github.com/confluentinc/kafka-rest .
-It connects to the UPP Kafka and Zookeeper services and provides a RESTful API to other services to consume and produces messages from/to Kafka.
+It connects to the MSK Kafka and Zookeeper services and provides a RESTful API to other services to consume and produces messages from/to Kafka.
 
 ## Contains Personal Data
 
@@ -75,7 +75,8 @@ Manual
 
 ## Release Details
 
-A lot of services depend on this service so a failover is required during release.
+Manual failover is needed when a new version of the service is deployed to production.
+Otherwise, an automated failover is going to take place when releasing.
 
 ## Key Management Process Type
 
@@ -88,12 +89,7 @@ To rotate credentials you need to login to a particular cluster and update varni
 
 ## Monitoring
 
-The Kafka REST proxy doesn't have monitoring of its own but several services which connect to it have healthchecks for kafka-proxy connectivity, e.g.:
-
-- Publishing-Prod-EU Publish Availability Monitor service health: https://upp-prod-publish-eu.upp.ft.com/__health/__pods-health?service-name=publish-availability-monitor
-- Publishing-Prod-US Publish Availability Monitor service health: https://upp-prod-publish-us.upp.ft.com/__health/__pods-health?service-name=publish-availability-monitor
-- Delivery-Prod-EU Methode Article Mapper health: https://upp-prod-delivery-eu.upp.ft.com/__health/__pods-health?service-name=methode-article-mapper
-- Delivery-Prod-US Methode Article Mapper health: https://upp-prod-delivery-us.upp.ft.com/__health/__pods-health?service-name=methode-article-mapper
+The Kafka REST proxy doesn't have monitoring of its own.
 
 ## First Line Troubleshooting
 
@@ -102,6 +98,3 @@ https://github.com/Financial-Times/upp-docs/tree/master/guides/ops/first-line-tr
 ## Second Line Troubleshooting
 
 Please refer to the GitHub repository README for troubleshooting information.
-
-Additionally you can check the old Kafka REST proxy guide https://sites.google.com/a/ft.com/universal-publishing/ops-guides/panic-guides/kafka-rest-proxy-guide
-
